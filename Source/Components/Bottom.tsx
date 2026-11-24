@@ -1,8 +1,7 @@
 export default function Bottom() {
   return (
     <>
-      <div></div>
-      <div></div>
+      <div className="flex-1 items-top"></div>
     </>
   );
 }

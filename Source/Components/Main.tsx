@@ -1,20 +1,30 @@
 import Top from "./Top";
 import Bottom from "./Bottom";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 
 export default function App() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [shouldPlayBackwards, setShouldPlayBackwards] =
+    useState<boolean>(false);
 
   useEffect(() => {
     if (videoRef.current) {
-      // 0.5 is half speed. Change this to 0.75 for a little slower.
-      videoRef.current.playbackRate = 0.5;
+      videoRef.current.playbackRate = 2;
     }
   }, []);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = shouldPlayBackwards ? -1 : 1;
+    }
+  }, [shouldPlayBackwards]);
 
   return (
     <>
       <video
+        onEnded={() => {
+          setShouldPlayBackwards((prev) => !prev);
+        }}
         ref={videoRef}
         autoPlay
         muted
@@ -35,8 +45,10 @@ export default function App() {
         <source src="/Videos/Background.webm" type="video/webm" />
       </video>
 
-      <Top />
-      <Bottom />
+      <div className="flex flex-col justify-center min-h-screen">
+        <Top />
+        <Bottom />
+      </div>
     </>
   );
 }

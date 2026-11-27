@@ -1,38 +1,20 @@
 import Top from "./Top";
 import Bottom from "./Bottom";
-import { useRef, useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function App() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [shouldPlayBackwards, setShouldPlayBackwards] =
-    useState<boolean>(false);
-
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 2;
-    }
-  }, []);
-
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = shouldPlayBackwards ? -1 : 1;
-    }
-  }, [shouldPlayBackwards]);
+  const [currentStationID, setCurrentStationID] = useState<number>(2);
 
   return (
     <>
       <video
-        onEnded={() => {
-          setShouldPlayBackwards((prev) => !prev);
-        }}
-        ref={videoRef}
         autoPlay
         muted
         loop
         playsInline
         width="100%"
         style={{
-          filter: "blur(10px) brightness(0.35)",
+          filter: "blur(10px) brightness(0.15)",
           position: "fixed",
           top: 0,
           left: 0,
@@ -42,11 +24,11 @@ export default function App() {
           zIndex: -1,
         }}
       >
-        <source src="/Videos/Background.webm" type="video/webm" />
+        <source src="Videos/Background.webm" type="video/webm" />
       </video>
 
-      <div className="flex flex-col justify-center min-h-screen">
-        <Top />
+      <div className="flex flex-col justify-center w-screen min-h-screen">
+        <Top currentStationID={currentStationID} />
         <Bottom />
       </div>
     </>

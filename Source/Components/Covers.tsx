@@ -1,7 +1,37 @@
-export default function App() {
+import { radioStations } from "./../Data/Data";
+
+export default function Cover({
+  currentStationID,
+}: {
+  currentStationID: number;
+}) {
+  const totalStations = radioStations.length; // currently its 20 bcuz i couldnt find the 2 best station covers :(
+
+  const getStation = (offset: number) => {
+    const targetId =
+      ((currentStationID - 1 + offset + totalStations) % totalStations) + 1;
+    return radioStations.find((station) => station.id === targetId);
+  };
+
+  const offsets = [-2, -1, 0, 1, 2]; // 0 is current
+
   return (
-    <>{/*<img src="/Images/AfroBankFM.png" alt="image failed to load" />*/}</>
+    <div className="flex items-center justify-center gap-2">
+      {offsets.map((offset) => {
+        const station = getStation(offset);
+
+        return (
+          <img
+            key={offset}
+            src={station?.imageSrc}
+            alt={station?.name}
+            className={
+              `w-[7vw] h-[7vw] object-cover ` +
+              (offset === 0 ? "outline-4 border-white" : "")
+            }
+          />
+        );
+      })}
+    </div>
   );
 }
-
-// image size should be 1x1 ( where 1 = 10% of the whole screen )

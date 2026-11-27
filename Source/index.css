@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: "Chalet Comprime";
+  src: url("/Fonts/ChaletComprime-CologneSixty.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: "Chalet Comprime", sans-serif;
+  color: white;
+  -webkit-text-stroke: 0.125px black;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
